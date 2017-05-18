@@ -1,0 +1,35 @@
+<mdl-card mdl-shadow="2" style="width:100%;" *ngIf="authService.getUser()">
+    <mdl-card-title>
+        <h2 mdl-card-title-text>Chat Rooms</h2>
+    </mdl-card-title>
+    <mdl-card-supporting-text mdl-card-expand>
+        <mdl-list>
+            <mdl-list-item *ngFor="let room of rooms" mdl-shadow="2">
+                <mdl-list-item-primary-content>
+                    {{room.name}}
+                </mdl-list-item-primary-content>
+                <mdl-list-item-secondary-action>
+                    <button mdl-button mdl-ripple mdl-colored="accent">Join</button>
+                </mdl-list-item-secondary-action>
+            </mdl-list-item>
+        </mdl-list>
+    </mdl-card-supporting-text>
+    <mdl-card-actions mdl-card-border>
+        <mdl-textfield type="text" label="Room name" floating-label #roomName></mdl-textfield>
+        <button [disabled]="!authService.getUser()" mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="createRoom(roomName.value)">Create room</button>
+        <button mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="getRooms()">Refresh</button>
+        <button mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="getUsers()">users</button>
+    </mdl-card-actions>
+</mdl-card>
+
+<mdl-card *ngIf="!authService.getUser()">
+    <mdl-card-title>
+        <h2 mdl-card-title-text>Choose a name</h2>
+    </mdl-card-title>
+    <mdl-card-supporting-text mdl-card-exapnd>
+        <mdl-textfield type="text" label="Name" floating-label #username></mdl-textfield>
+    </mdl-card-supporting-text>
+    <mdl-card-actions>
+        <button mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="authService.setUser(username.value)">Set</button>
+    </mdl-card-actions>
+</mdl-card>

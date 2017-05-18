@@ -1,0 +1,16 @@
+<div id="auth" *ngIf="!authService.getUser()">
+    <input type="text" name="username" #username>
+    <button (click)="authService.setUser(username.value)">Log in</button>
+</div>
+
+<div id="messages" *ngIf="authService.getUser()">
+    <div class="message" *ngFor="let m of messages">
+        <span class="from">{{m.from}}</span>:
+        <span class="message-text">{{m.message}}</span>
+    </div>
+
+    <div id="send-button">
+        <input type="text" #tosend name="tosend">
+        <button (click)="sendMessage(tosend.value)"> Send</button>
+    </div>
+</div>
