@@ -1,35 +1,48 @@
-<mdl-card mdl-shadow="2" style="width:100%;" *ngIf="authService.getUser()">
-    <mdl-card-title>
-        <h2 mdl-card-title-text>Chat Rooms</h2>
-    </mdl-card-title>
-    <mdl-card-supporting-text mdl-card-expand>
-        <mdl-list>
-            <mdl-list-item *ngFor="let room of rooms" mdl-shadow="2">
-                <mdl-list-item-primary-content>
-                    {{room.name}}
-                </mdl-list-item-primary-content>
-                <mdl-list-item-secondary-action>
-                    <button mdl-button mdl-ripple mdl-colored="accent">Join</button>
-                </mdl-list-item-secondary-action>
-            </mdl-list-item>
-        </mdl-list>
-    </mdl-card-supporting-text>
-    <mdl-card-actions mdl-card-border>
-        <mdl-textfield type="text" label="Room name" floating-label #roomName></mdl-textfield>
-        <button [disabled]="!authService.getUser()" mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="createRoom(roomName.value)">Create room</button>
-        <button mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="getRooms()">Refresh</button>
-        <button mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="getUsers()">users</button>
-    </mdl-card-actions>
-</mdl-card>
+<div class="mdl-grid">
+    <mdl-layout-spacer></mdl-layout-spacer>
+    <mdl-card mdl-shadow="2" *ngIf="authService.getUser()" class="mdl-cell mdl-cell--8-col">
+        <mdl-card-title>
+            <h2 mdl-card-title-text>Chat Rooms</h2>
+        </mdl-card-title>
+        <mdl-card-supporting-text mdl-card-expand>
+            <mdl-expansion-panel-group #panelGroup >
+                <mdl-expansion-panel *ngFor="let room of rooms">
+                    <mdl-expansion-panel-header>
+                        <mdl-expansion-panel-header-list-content>{{room.name}}</mdl-expansion-panel-header-list-content>
+                        <mdl-expansion-panel-header-secondary-content>Creator:{{room.creator}}</mdl-expansion-panel-header-secondary-content>
+                    </mdl-expansion-panel-header>
+                    <mdl-expansion-panel-content>
+                        <mdl-expansion-panel-body>
+                            <p>This is expansion panel {{room.ane}}</p>
+                        </mdl-expansion-panel-body>
+                        <mdl-expansion-panel-footer>
+                            <mdl-button>Cancel</mdl-button>
+                            <mdl-button>Join</mdl-button>
+                        </mdl-expansion-panel-footer>
+                    </mdl-expansion-panel-content>
+                </mdl-expansion-panel>
+            </mdl-expansion-panel-group>
+        </mdl-card-supporting-text>
+        <mdl-card-actions mdl-card-border>
+            <mdl-textfield type="text" label="Room name" floating-label #roomName></mdl-textfield>
+            <button [disabled]="!authService.getUser()" mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="createRoom(roomName.value)">Create room</button>
+            <button mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="getRooms()">Refresh</button>
+            <button mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="getUsers()">users</button>
+        </mdl-card-actions>
+    </mdl-card>
 
-<mdl-card *ngIf="!authService.getUser()">
-    <mdl-card-title>
-        <h2 mdl-card-title-text>Choose a name</h2>
-    </mdl-card-title>
-    <mdl-card-supporting-text mdl-card-exapnd>
-        <mdl-textfield type="text" label="Name" floating-label #username></mdl-textfield>
-    </mdl-card-supporting-text>
-    <mdl-card-actions>
-        <button mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="authService.setUser(username.value)">Set</button>
-    </mdl-card-actions>
-</mdl-card>
+    <mdl-card mdl-shadow="2" *ngIf="!authService.getUser()" class="mdl-cell mdl-cell--4-col">
+        <mdl-card-title>
+            <h2 mdl-card-title-text>Choose a name</h2>
+        </mdl-card-title>
+        <mdl-card-supporting-text mdl-card-exapnd>
+            <mdl-textfield type="text" label="Name" floating-label #username style="width:100%"></mdl-textfield>
+        </mdl-card-supporting-text>
+        <mdl-card-actions mdl-card-border>
+            <button mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="authService.setUser(username.value)">Set</button>
+        </mdl-card-actions>
+    </mdl-card>
+    <mdl-layout-spacer></mdl-layout-spacer>
+
+
+</div>

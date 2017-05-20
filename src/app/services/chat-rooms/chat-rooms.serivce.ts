@@ -19,7 +19,7 @@ export class RoomsService {
     }
 
     public createRoom(name) {
-        this.socket.emit('room:create', {name});
+        this.socket.emit('room:new', {name});
     }
 
     public getAllUsers() {

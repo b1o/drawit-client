@@ -14,7 +14,7 @@ export class AuthService {
     public setUser(user) {
         this.username = user;
         this.id = Math.random()
-        this.socket.emit('user:created', { name: user, id: this.id })
+        this.socket.emit('user:new', { name: user, id: this.id })
     }
 
     public getUser() {

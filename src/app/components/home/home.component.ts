@@ -9,7 +9,7 @@ import { AuthService } from '../../services/user/auth.service';
 export class HomeComponent implements OnInit {
     public rooms = [];
 
-    constructor(private roomService: RoomsService, private authService: AuthService) {
+    constructor(private roomService: RoomsService, public authService: AuthService) {
 
 
     }
@@ -46,8 +46,6 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getRooms()
-
         this.roomService.onRoomCreated().subscribe(
             (data) => {
                 this.rooms.push(data);
