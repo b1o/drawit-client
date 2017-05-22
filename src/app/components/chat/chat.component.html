@@ -1,16 +1,52 @@
-<div id="auth" *ngIf="!authService.getUser()">
-    <input type="text" name="username" #username>
-    <button (click)="authService.setUser(username.value)">Log in</button>
-</div>
+<div class="mdl-grid" *ngIf="authService.username">
+    <mdl-layout-spacer></mdl-layout-spacer>
+    <mdl-card mdl-shadow="16" class="mdl-cell mdl-cell--6-col">
+        <mdl-card-title mdl-card-border>
+            <h2 mdl-card-title-text>Lobby</h2>
+        </mdl-card-title>
+        <mdl-card-supporting-text mdl-card-exapnd>
+            <mdl-list class="message-container" #msgs style="max-height:500px; height:350px; overflow:auto;">
+                <mdl-list-item lines="3" *ngFor="let m of messages">
+                    <mdl-list-item-primary-content>
+                        <mdl-icon mdl-list-item-icon>person</mdl-icon>
+                        <span> {{m.from == authService.username ? 'You' : m.from}}</span>
+                        <mdl-list-item-text-body>
+                            {{m.text}}
+                        </mdl-list-item-text-body>
+                    </mdl-list-item-primary-content>
 
-<div id="messages" *ngIf="authService.getUser()">
-    <div class="message" *ngFor="let m of messages">
-        <span class="from">{{m.from}}</span>:
-        <span class="message-text">{{m.message}}</span>
-    </div>
+                </mdl-list-item>
+            </mdl-list>
+        </mdl-card-supporting-text>
+        <mdl-card-actions mdl-card-border style="display:flex; justify-content:center; align-items:center">
+            <form (submit)="sendMessage()">
+                <mdl-textfield label="Message"  name="input"[(ngModel)]="input" floating-label type="text" #tosend (keyUp)="sendMessage($event, true)">
+                </mdl-textfield>
+                <mdl-button type="submit" mdl-button-type="raised" mdl-ripple mdl-colored="accent"  (click)="sendMessage()">Send</mdl-button>
+            </form>
 
-    <div id="send-button">
-        <input type="text" #tosend name="tosend">
-        <button (click)="sendMessage(tosend.value)"> Send</button>
-    </div>
+        </mdl-card-actions>
+    </mdl-card>
+    <mdl-layout-spacer></mdl-layout-spacer>
+    <mdl-card mdl-shadow="16" class="mdl-cell mdl-cell--4-col">
+        <mdl-card-title mdl-card-border>
+            <h2 mdl-card-title-text>Users</h2>
+        </mdl-card-title>
+        <mdl-card-supporting-text>
+            <mdl-list>
+                <mdl-list-item lines="3" *ngFor="let u of users">
+                    <mdl-list-item-primary-content>
+                        <mdl-icon mdl-list-item-icon>{{u.name == authService.username ? 'start' : 'person'}}</mdl-icon>
+                        <span>{{u.name == authService.username ? 'You' : u.name}}</span>
+                        <mdl-list-item-text-body>
+                            {{u.inRoom}}
+                        </mdl-list-item-text-body>
+                    </mdl-list-item-primary-content>
+
+                </mdl-list-item>
+            </mdl-list>
+        </mdl-card-supporting-text>
+    </mdl-card>
+    <mdl-layout-spacer></mdl-layout-spacer>
+
 </div>

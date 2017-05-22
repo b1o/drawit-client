@@ -14,8 +14,9 @@ export class ChatService {
         this.socket = this.socketService.getSocket()
     }
 
-    public sendMessage(from, message) {
-        this.socket.emit('add-message', { message, from })
+    public sendMessage(from, message, callback) {
+        console.log('sending', message)
+        this.socket.emit('message:new', { message, from}, callback)
     }
     public getMessage() {
         let obs = new Observable(observer => {

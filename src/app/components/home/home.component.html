@@ -9,7 +9,7 @@
                 <mdl-expansion-panel *ngFor="let room of rooms">
                     <mdl-expansion-panel-header>
                         <mdl-expansion-panel-header-list-content>{{room.name}}</mdl-expansion-panel-header-list-content>
-                        <mdl-expansion-panel-header-secondary-content>Creator:{{room.creator}}</mdl-expansion-panel-header-secondary-content>
+                        <mdl-expansion-panel-header-secondary-content>Creator:{{room.creator.name}}</mdl-expansion-panel-header-secondary-content>
                     </mdl-expansion-panel-header>
                     <mdl-expansion-panel-content>
                         <mdl-expansion-panel-body>
@@ -17,7 +17,7 @@
                         </mdl-expansion-panel-body>
                         <mdl-expansion-panel-footer>
                             <mdl-button>Cancel</mdl-button>
-                            <mdl-button>Join</mdl-button>
+                            <mdl-button (click)="join(room.name)" >Join</mdl-button>
                         </mdl-expansion-panel-footer>
                     </mdl-expansion-panel-content>
                 </mdl-expansion-panel>
@@ -44,5 +44,6 @@
     </mdl-card>
     <mdl-layout-spacer></mdl-layout-spacer>
 
-
 </div>
+
+<chat [room]="Lobby"></chat>

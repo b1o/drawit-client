@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { RoomsService } from '../../services/chat-rooms/chat-rooms.serivce';
 import { AuthService } from '../../services/user/auth.service';
@@ -9,7 +10,7 @@ import { AuthService } from '../../services/user/auth.service';
 export class HomeComponent implements OnInit {
     public rooms = [];
 
-    constructor(private roomService: RoomsService, public authService: AuthService) {
+    constructor(private roomService: RoomsService, public authService: AuthService, private router: Router) {
 
 
     }
@@ -45,8 +46,19 @@ export class HomeComponent implements OnInit {
         )
     }
 
+    public join(name:string) {
+        this.roomService.joinRoom(name)
+        this.router.navigateByUrl('chat/' + name)
+    }
+
     ngOnInit() {
-        this.roomService.onRoomCreated().subscribe(
+        this.roomService.listenForUsers().subscribe(
+            (data) => {
+                console.log(data)
+            }
+        )
+
+        this.roomService.onUpdateRooms().subscribe(
             (data) => {
                 this.rooms.push(data);
                 console.log(this.rooms);
