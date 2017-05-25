@@ -5,15 +5,18 @@
             <h2 mdl-card-title-text>Chat Rooms</h2>
         </mdl-card-title>
         <mdl-card-supporting-text mdl-card-expand>
-            <mdl-expansion-panel-group #panelGroup >
+            <mdl-expansion-panel-group *ngIf="rooms" #panelGroup >
                 <mdl-expansion-panel *ngFor="let room of rooms">
                     <mdl-expansion-panel-header>
                         <mdl-expansion-panel-header-list-content>{{room.name}}</mdl-expansion-panel-header-list-content>
-                        <mdl-expansion-panel-header-secondary-content>Creator:{{room.creator.name}}</mdl-expansion-panel-header-secondary-content>
+                        <mdl-expansion-panel-header-secondary-content *ngIf="room.creator">Creator:{{room.creator.name}}</mdl-expansion-panel-header-secondary-content>
                     </mdl-expansion-panel-header>
                     <mdl-expansion-panel-content>
                         <mdl-expansion-panel-body>
-                            <p>This is expansion panel {{room.ane}}</p>
+                            <p *ngFor="let user of room.users">
+                                <mdl-icon>person</mdl-icon>
+                                {{user.name}}
+                            </p>
                         </mdl-expansion-panel-body>
                         <mdl-expansion-panel-footer>
                             <mdl-button>Cancel</mdl-button>
@@ -46,4 +49,4 @@
 
 </div>
 
-<chat [room]="Lobby"></chat>
+<chat *ngIf="authService.user" [room]="authService.user.inRoom"></chat>

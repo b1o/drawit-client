@@ -1,8 +1,8 @@
-<div class="mdl-grid" *ngIf="authService.username">
+<div class="mdl-grid" *ngIf="authService.user">
     <mdl-layout-spacer></mdl-layout-spacer>
     <mdl-card mdl-shadow="16" class="mdl-cell mdl-cell--6-col">
         <mdl-card-title mdl-card-border>
-            <h2 mdl-card-title-text>Lobby</h2>
+            <h2 mdl-card-title-text>{{room.name}}</h2>
         </mdl-card-title>
         <mdl-card-supporting-text mdl-card-exapnd>
             <mdl-list class="message-container" #msgs style="max-height:500px; height:350px; overflow:auto;">
@@ -36,8 +36,8 @@
             <mdl-list>
                 <mdl-list-item lines="3" *ngFor="let u of users">
                     <mdl-list-item-primary-content>
-                        <mdl-icon mdl-list-item-icon>{{u.name == authService.username ? 'start' : 'person'}}</mdl-icon>
-                        <span>{{u.name == authService.username ? 'You' : u.name}}</span>
+                        <mdl-icon mdl-list-item-icon>{{u.name == authService.user.name ? 'star' : 'person'}}</mdl-icon>
+                        <span>{{u.name == authService.user.name ? 'You' : u.name}}</span>
                         <mdl-list-item-text-body>
                             {{u.inRoom}}
                         </mdl-list-item-text-body>

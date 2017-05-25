@@ -48,20 +48,39 @@ export class HomeComponent implements OnInit {
 
     public join(name:string) {
         this.roomService.joinRoom(name)
-        this.router.navigateByUrl('chat/' + name)
     }
 
     ngOnInit() {
+        this.authService.onRooms.subscribe(
+            (data) => {
+                this.rooms = data;
+                console.log(data)
+            }
+        )
+
         this.roomService.listenForUsers().subscribe(
             (data) => {
                 console.log(data)
             }
         )
 
+        this.roomService.onUpdateRoom().subscribe(
+            (data:any) => {
+                console.log(data)
+                let room = this.rooms.find((room) => {
+                    return room.name == data.name;
+                })
+
+               if(!room) {
+                   this.rooms.push(data)
+               }
+            }
+        )
+
         this.roomService.onUpdateRooms().subscribe(
-            (data) => {
-                this.rooms.push(data);
-                console.log(this.rooms);
+            (data:any) => {
+                this.rooms = data;
+                console.log('on rooms',data);
             }
         )
 

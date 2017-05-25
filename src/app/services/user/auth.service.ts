@@ -8,6 +8,7 @@ export class AuthService {
     private id;
     public user;
     public onUsers = new EventEmitter()
+    public onRooms = new EventEmitter()
 
     constructor(private socketService: SocketService) {
         this.socket = this.socketService.getSocket()
@@ -18,7 +19,9 @@ export class AuthService {
         let self = this;
         this.socket.emit('user:new', { name: user}, function(data) {
             self.user = data.me;
-           self.onUsers.emit(data)
+           //self.onUsers.emit(data)
+           self.onRooms.emit(data.rooms)
+           console.log('user:new response', data)
         })
 
     }

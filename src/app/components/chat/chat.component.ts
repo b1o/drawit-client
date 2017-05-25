@@ -50,10 +50,17 @@ export class ChatComponent implements OnInit {
             }
         )
 
-        this.roomService.listenForUsers().subscribe(
+        this.roomService.onSwitchRoom.subscribe(
             (data) => {
-                console.log(data)
-                this.users.push(data)
+                this.room = data;
+            }
+        )
+
+        this.roomService.listenForUsers().subscribe(
+            (data:any) => {
+                console.log('got users', data)
+                console.log(this.authService.user)
+                this.users = data
             }
         )
 
