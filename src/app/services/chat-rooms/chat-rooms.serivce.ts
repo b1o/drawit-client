@@ -11,10 +11,18 @@ export class RoomsService {
     public socket;
     public currentRoom;
     public onSwitchRoom = new EventEmitter()
+    public gotUsers = new EventEmitter()
+    public gotRooms = new EventEmitter();
 
     constructor(private http: Http, private socketService: SocketService, private authService: AuthService) {
         this.socket = this.socketService.getSocket()
-
+        this.authService.registerSuccess.subscribe(
+            () => {
+                console.log('getting info')
+                this.getUsers()
+                this.getRooms()
+            }
+        )
     }
 
     public getChatRooms() {
@@ -28,8 +36,20 @@ export class RoomsService {
         });
     }
 
-    public getAllUsers() {
-        return this.http.get(environment.server + 'users');
+    public getUsers() {
+        console.log('getting users')
+        this.socket.emit('get:users', {}, (data) => {
+            console.log('got users', data)
+            this.gotUsers.emit(data)
+        })
+    }
+
+    public getRooms() {
+        console.log('getting rooms')
+        this.socket.emit('get:rooms', {}, (data) => {
+            console.log('got rooms', data)
+            this.gotRooms.emit(data)
+        })
     }
 
     public joinRoom(name) {
@@ -49,6 +69,19 @@ export class RoomsService {
     public listenForUsers() {
         let obs = new Observable(observer => {
             this.socket.on('update:users', (data) => {
+                observer.next(data);
+            })
+            return () => {
+                this.socket.disconnect();
+            }
+        })
+
+        return obs;
+    }
+
+    public listenForRoomUsers() {
+        let obs = new Observable(observer => {
+            this.socket.on('update:room-users', (data) => {
                 observer.next(data);
             })
             return () => {

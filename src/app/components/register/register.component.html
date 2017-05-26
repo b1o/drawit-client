@@ -1,0 +1,15 @@
+<div class="mdl-grid">
+    <mdl-layout-spacer></mdl-layout-spacer>
+    <mdl-card mdl-shadow="2" >
+        <mdl-card-title>
+            <h2 mdl-card-title-text>Choose a name</h2>
+        </mdl-card-title>
+        <mdl-card-supporting-text mdl-card-exapnd>
+            <mdl-textfield type="text" label="Name" [(ngModel)]='name' floating-label #username style="width:100%"></mdl-textfield>
+        </mdl-card-supporting-text>
+        <mdl-card-actions mdl-card-border>
+            <button mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="register()">Set</button>
+        </mdl-card-actions>
+    </mdl-card>
+    <mdl-layout-spacer></mdl-layout-spacer>
+</div>

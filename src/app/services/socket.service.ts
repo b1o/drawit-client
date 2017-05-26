@@ -9,7 +9,6 @@ export class SocketService {
     constructor() {
         if (!this.socket) {
             this.socket = io(environment.server)
-
         }
     }
 

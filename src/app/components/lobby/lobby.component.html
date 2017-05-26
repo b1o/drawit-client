@@ -1,11 +1,11 @@
 <div class="mdl-grid">
     <mdl-layout-spacer></mdl-layout-spacer>
-    <mdl-card mdl-shadow="2" *ngIf="authService.getUser()" class="mdl-cell mdl-cell--8-col">
+    <mdl-card mdl-shadow="3" class="mdl-cell mdl-cell--8-col">
         <mdl-card-title>
-            <h2 mdl-card-title-text>Chat Rooms</h2>
+            <h2 mdl-card-title-text>Lobby</h2>
         </mdl-card-title>
         <mdl-card-supporting-text mdl-card-expand>
-            <mdl-expansion-panel-group *ngIf="rooms" #panelGroup >
+            <mdl-expansion-panel-group *ngIf="rooms" #panelGroup>
                 <mdl-expansion-panel *ngFor="let room of rooms">
                     <mdl-expansion-panel-header>
                         <mdl-expansion-panel-header-list-content>{{room.name}}</mdl-expansion-panel-header-list-content>
@@ -13,30 +13,30 @@
                     </mdl-expansion-panel-header>
                     <mdl-expansion-panel-content>
                         <mdl-expansion-panel-body>
-                            <p *ngFor="let user of room.users">
-                                <mdl-icon>person</mdl-icon>
-                                {{user.name}}
-                            </p>
+                            <mdl-list>
+                                <mdl-list-item *ngFor="let user of room.users">
+                                    <mdl-list-item-primary-content>
+                                        <mdl-icon>person</mdl-icon>
+                                        <span> {{user.name}}</span>
+                                    </mdl-list-item-primary-content>
+                                </mdl-list-item>
+                            </mdl-list>
+
                         </mdl-expansion-panel-body>
                         <mdl-expansion-panel-footer>
                             <mdl-button>Cancel</mdl-button>
-                            <mdl-button (click)="join(room.name)" >Join</mdl-button>
+                            <mdl-button (click)="joinRoom(room.name)">Join</mdl-button>
                         </mdl-expansion-panel-footer>
                     </mdl-expansion-panel-content>
                 </mdl-expansion-panel>
             </mdl-expansion-panel-group>
         </mdl-card-supporting-text>
-        <mdl-card-actions mdl-card-border>
-            <mdl-textfield type="text" label="Room name" floating-label #roomName></mdl-textfield>
-            <button [disabled]="!authService.getUser()" mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="createRoom(roomName.value)">Create room</button>
-            <button mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="getRooms()">Refresh</button>
-            <button mdl-button mdl-ripple mdl-button-type="raised" mdl-colored="accent" (click)="getUsers()">users</button>
+        <mdl-card-actions>
+            <mdl-textfield label="Room name" floating-label #roomName></mdl-textfield>
+            <mdl-button mdl-colored="primary" mdl-ripple (click)="createRoom(roomName.value)">Create Room</mdl-button>
         </mdl-card-actions>
     </mdl-card>
-
-    
     <mdl-layout-spacer></mdl-layout-spacer>
-
 </div>
 
 <chat *ngIf="authService.user" [room]="authService.user.inRoom"></chat>

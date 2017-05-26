@@ -29,14 +29,6 @@ export class HomeComponent implements OnInit {
         }
     }
 
-    public getUsers() {
-        this.roomService.getAllUsers().subscribe(
-            (data) => {
-                console.log(data)
-            }
-        )
-    }
-
     public getRooms() {
         this.roomService.getChatRooms().subscribe(
             (data) => {

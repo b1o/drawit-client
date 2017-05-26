@@ -1,3 +1,5 @@
+import { LobbyComponent } from './components/lobby/lobby.component';
+import { RegisterComponent } from './components/register/register.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +18,7 @@ import { PageNotFoundComponent } from "app/components/not-found/not-found.compon
 import { RoomsService } from './services/chat-rooms/chat-rooms.serivce';
 
 import { MdlModule } from '@angular-mdl/core';
-import { MdlExpansionPanelModule} from '@angular-mdl/expansion-panel';
+import { MdlExpansionPanelModule } from '@angular-mdl/expansion-panel';
 import { SocketService } from './services/socket.service';
 
 
@@ -25,7 +27,9 @@ import { SocketService } from './services/socket.service';
     AppComponent,
     ChatComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    RegisterComponent,
+    LobbyComponent
   ],
   imports: [
     BrowserModule,
