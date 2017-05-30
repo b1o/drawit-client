@@ -20,6 +20,7 @@ import { RoomsService } from './services/chat-rooms/chat-rooms.serivce';
 import { MdlModule } from '@angular-mdl/core';
 import { MdlExpansionPanelModule } from '@angular-mdl/expansion-panel';
 import { SocketService } from './services/socket.service';
+import { GameComponent } from './components/game/game.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { SocketService } from './services/socket.service';
     HomeComponent,
     PageNotFoundComponent,
     RegisterComponent,
-    LobbyComponent
+    LobbyComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,

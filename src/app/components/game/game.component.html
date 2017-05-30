@@ -1,0 +1,30 @@
+<style>
+    .container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+
+</style>
+
+<div class="mdl-grid">
+    <mdl-layout-spacer></mdl-layout-spacer>
+    <mdl-card mdl-shadow="16" class="mdl-cell mdl-cell--10-col">
+        <mdl-card-title mdl-card-border>
+            <h2 mdl-card-title-text>Drawing board</h2>
+        </mdl-card-title>
+        <mdl-card-supporting-text id="container" mdl-card-expand style="padding:0; width:100%; position:relative; height:500px">
+            <canvas width="1920px" height="1080px" #canvas (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></canvas>
+        </mdl-card-supporting-text>
+        <mdl-card-actions mdl-card-border>
+            <mdl-button mdl-ripple mdl-button-type="raised">Something</mdl-button>
+        </mdl-card-actions>
+    </mdl-card>
+    <mdl-layout-spacer></mdl-layout-spacer>
+
+</div>
+
