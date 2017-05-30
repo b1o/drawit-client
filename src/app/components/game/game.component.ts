@@ -20,6 +20,11 @@ export class GameComponent implements OnInit {
     }
     isDrawing = false;
     public socket;
+    public drawingWord;
+    public canDraw = false;
+    public gameStarted = false;
+    public guesses = []
+    public guessWord;
 
     constructor(private socketService: SocketService, private authService: AuthService) {
 
@@ -76,7 +81,7 @@ export class GameComponent implements OnInit {
         var w = this.canvas.nativeElement.width;
         var h = this.canvas.nativeElement.height;
 
-        if(!emit) {
+        if (!emit) {
             return;
         }
 
@@ -96,10 +101,37 @@ export class GameComponent implements OnInit {
         this.drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color, false);
     }
 
+    public startGame() {
+        this.gameStarted = true;
+        this.socket.emit('game-start', {})
+    }
+
+    public guess() {
+        this.socket.emit('guess-word', { word: this.guessWord });
+        this.guessWord = ""
+    }
+
     ngOnInit() {
         this.context = this.canvas.nativeElement.getContext('2d');
         this.socket = this.socketService.getSocket()
         this.socket.on('drawing', this.onDrawingEvent.bind(this))
+
+
+        this.socket.on('game-started', (data) => {
+            console.log(data)
+            if (data.drawer.name == this.authService.user.name) {
+                this.canDraw = true;
+                this.gameStarted = true;
+                if(data.word) {
+                    this.drawingWord = data.word;
+                }
+            }
+        })
+
+        this.socket.on('word-guess', (data) => {
+            this.guesses.push(data);
+        })
+
         console.log(this.canvas.nativeElement.offsetWidth, this.canvas.nativeElement.offsetHeight)
     }
 

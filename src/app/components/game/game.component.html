@@ -16,15 +16,29 @@
     <mdl-card mdl-shadow="16" class="mdl-cell mdl-cell--10-col">
         <mdl-card-title mdl-card-border>
             <h2 mdl-card-title-text>Drawing board</h2>
+            <h5 *ngIf="drawingWord && canDraw">Draw {{drawingWord}}</h5>
         </mdl-card-title>
         <mdl-card-supporting-text id="container" mdl-card-expand style="padding:0; width:100%; position:relative; height:500px">
             <canvas width="1920px" height="1080px" #canvas (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></canvas>
         </mdl-card-supporting-text>
         <mdl-card-actions mdl-card-border>
-            <mdl-button mdl-ripple mdl-button-type="raised">Something</mdl-button>
+            <mdl-button *ngIf="!gameStarted" mdl-ripple mdl-button-type="raised" (click)="startGame()">Start</mdl-button>
+            <form *ngIf="!canDraw" (submit)="guess()">
+                <mdl-textfield name="guess" label="guess the word" floating-label type="text" [(ngModel)]="guessWord"></mdl-textfield>
+                <mdl-button mdl-ripple mdl-button-type="raised" (click)="guess()">Guess</mdl-button>
+            </form>
         </mdl-card-actions>
     </mdl-card>
     <mdl-layout-spacer></mdl-layout-spacer>
+    <mdl-card mdl-shadow="16">
+        <mdl-list>
+            <mdl-list-item *ngFor="let guess of guesses"> 
+                <mdl-list-item-primary-content>
+                    <span [ngStyle]="{color: guess.isRight? 'green' : 'red'}">{{guess.word}}</span>
+                </mdl-list-item-primary-content>
+            </mdl-list-item>
+        </mdl-list>
+    </mdl-card>
 
 </div>
 
